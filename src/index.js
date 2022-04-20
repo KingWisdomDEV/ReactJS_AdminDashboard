@@ -1,4 +1,11 @@
-const a = 'dfd';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-const c = 'sfsf';
-const hello = name => `hello ${name}`;
+const rootElement = document.getElementById('root');
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  rootElement
+);
