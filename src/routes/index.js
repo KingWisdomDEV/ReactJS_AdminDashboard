@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Counter from '../containers/Counter';
 import TestMUI from '../TestMUI';
 
 function NotFound() {
@@ -20,6 +21,7 @@ function AppRoutes() {
       <Route path="/">
         <Route index element={<TestMUI />} />
       </Route>
+      <Route path="/counter" element={<Counter />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="*" element={<NotFound />} />
