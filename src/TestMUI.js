@@ -1,9 +1,13 @@
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import SaveIcon from '@mui/icons-material/Save';
 import SendIcon from '@mui/icons-material/Send';
-import { Button, Paper, Stack, Typography } from '@mui/material';
+import { Button, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { makeStyles, styled } from '@mui/styles';
 import clsx from 'clsx';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectThemeMode, userPreferenceActions } from './redux/userPreferenceSlice';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,6 +45,9 @@ const MyButton = styled(Button)({
 
 function TestMUI() {
   const classes = useStyles();
+  const currentThemeMode = useSelector(selectThemeMode);
+  const dispatch = useDispatch();
+
   return (
     <Paper className={classes.root}>
       <Typography variant="h1" className={clsx(classes.bgPrimary, classes.txtWhite)}>
@@ -62,6 +69,17 @@ function TestMUI() {
         <Button className={classes.btn}>Custome Button</Button>
         <MyButton>My Button Styled</MyButton>
       </Stack>
+
+      <Paper className={classes.root}>
+        {currentThemeMode ? 'dark' : 'light'} mode
+        <IconButton
+          sx={{ ml: 1 }}
+          onClick={() => dispatch(userPreferenceActions.changeTheme(currentThemeMode === 'light' ? 'dark' : 'light'))}
+          color="inherit"
+        >
+          {currentThemeMode ? <Brightness7Icon /> : <Brightness4Icon />}
+        </IconButton>
+      </Paper>
     </Paper>
   );
 }
