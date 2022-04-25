@@ -4,12 +4,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { THEMES } from './constants';
-import { selectThemeMode } from './redux/userPreferenceSlice';
+import { selectLocale, selectThemeMode } from './redux/userPreferenceSlice';
 import AppRoutes from './routes';
 import { darkTheme, lightTheme } from './themes';
+import I18nProvider from './i18n/Provider';
 
 function App() {
   const currentThemeMode = useSelector(selectThemeMode);
+  const currentLocale = useSelector(selectLocale);
+
   let currentTheme = currentThemeMode === THEMES.LIGHT ? lightTheme : darkTheme;
   currentTheme = responsiveFontSizes(currentTheme);
 
@@ -18,9 +21,9 @@ function App() {
       <ThemeProvider theme={currentTheme}>
         <BrowserRouter>
           <CssBaseline />
-          <div>
+          <I18nProvider locale={currentLocale} defaultLocale={currentLocale}>
             <AppRoutes />
-          </div>
+          </I18nProvider>
         </BrowserRouter>
       </ThemeProvider>
     </StyledEngineProvider>
