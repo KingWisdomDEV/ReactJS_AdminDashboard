@@ -7,8 +7,10 @@ import { makeStyles, styled } from '@mui/styles';
 import clsx from 'clsx';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { THEMES } from './constants';
+import { LOCALES, THEMES } from './constants';
 import { selectThemeMode, userPreferenceActions } from './redux/userPreferenceSlice';
+import I18nProvider from './i18n/Provider';
+import translate from './i18n/translate';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,29 +51,31 @@ function TestMUI() {
   const currentThemeMode = useSelector(selectThemeMode);
   const dispatch = useDispatch();
 
-  return (
-    <Paper className={classes.root}>
-      <Typography variant="h1" className={clsx(classes.bgPrimary, classes.txtWhite)}>
-        Hello King Wisdom
-      </Typography>
-      <Typography variant="h2" color="primary">
-        Hello King Wisdom
-      </Typography>
-      <Typography variant="h3" className={classes.bgSecondary}>
-        Hello King Wisdom
-      </Typography>
-      <Stack direction="row" alignItems="center" justifyContent="space-around">
-        <Button variant="outlined" startIcon={<SaveIcon />}>
-          Save
-        </Button>
-        <Button variant="outlined" color="secondary" endIcon={<SendIcon />}>
-          Send Message
-        </Button>
-        <Button className={classes.btn}>Custome Button</Button>
-        <MyButton>My Button Styled</MyButton>
-      </Stack>
+  const [locale, setLocales] = React.useState(LOCALES.VIETNAM);
 
+  return (
+    <I18nProvider locale={locale} defaultLocale={locale}>
       <Paper className={classes.root}>
+        <Typography variant="h1" className={clsx(classes.bgPrimary, classes.txtWhite)}>
+          Hello King Wisdom
+        </Typography>
+        <Typography variant="h2" color="primary">
+          Hello King Wisdom
+        </Typography>
+        <Typography variant="h3" className={classes.bgSecondary}>
+          Hello King Wisdom
+        </Typography>
+        <Stack direction="row" alignItems="center" justifyContent="space-around">
+          <Button variant="outlined" startIcon={<SaveIcon />}>
+            Save
+          </Button>
+          <Button variant="outlined" color="secondary" endIcon={<SendIcon />}>
+            Send Message
+          </Button>
+          <Button className={classes.btn}>Custome Button</Button>
+          <MyButton>My Button Styled</MyButton>
+        </Stack>
+        <hr />
         {currentThemeMode} mode
         <IconButton
           sx={{ ml: 1 }}
@@ -82,8 +86,13 @@ function TestMUI() {
         >
           {currentThemeMode === THEMES.LIGHT ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
+        <hr />
+        <h1>{translate('hello')}</h1>
+        <h1>{translate('hello-name', { name: 'King Wisdom' })}</h1>
+        <button onClick={() => setLocales(LOCALES.VIETNAM)}>Vietnam</button>
+        <button onClick={() => setLocales(LOCALES.ENGLISH)}>English</button>
       </Paper>
-    </Paper>
+    </I18nProvider>
   );
 }
 
