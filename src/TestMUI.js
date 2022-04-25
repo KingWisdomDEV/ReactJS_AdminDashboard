@@ -7,6 +7,7 @@ import { makeStyles, styled } from '@mui/styles';
 import clsx from 'clsx';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { THEMES } from './constants';
 import { selectThemeMode, userPreferenceActions } from './redux/userPreferenceSlice';
 
 const useStyles = makeStyles(theme => ({
@@ -71,13 +72,15 @@ function TestMUI() {
       </Stack>
 
       <Paper className={classes.root}>
-        {currentThemeMode ? 'dark' : 'light'} mode
+        {currentThemeMode} mode
         <IconButton
           sx={{ ml: 1 }}
-          onClick={() => dispatch(userPreferenceActions.changeTheme(currentThemeMode === 'light' ? 'dark' : 'light'))}
+          onClick={() =>
+            dispatch(userPreferenceActions.changeTheme(currentThemeMode === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT))
+          }
           color="inherit"
         >
-          {currentThemeMode ? <Brightness7Icon /> : <Brightness4Icon />}
+          {currentThemeMode === THEMES.LIGHT ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
       </Paper>
     </Paper>

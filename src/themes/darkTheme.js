@@ -1,9 +1,10 @@
 import { createTheme } from '@mui/material';
 import { red } from '@mui/material/colors';
+import { THEMES } from '../constants';
 
 const darkTheme = createTheme({
-  mode: 'dark',
   palette: {
+    mode: THEMES.DARK,
     primary: {
       main: red[500],
       light: '#ff8788',

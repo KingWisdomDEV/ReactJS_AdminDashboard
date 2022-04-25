@@ -10,7 +10,7 @@ import { darkTheme, lightTheme } from './themes';
 
 function App() {
   const currentThemeMode = useSelector(selectThemeMode);
-  let currentTheme = currentThemeMode !== THEMES.LIGHT ? lightTheme : darkTheme;
+  let currentTheme = currentThemeMode === THEMES.LIGHT ? lightTheme : darkTheme;
   currentTheme = responsiveFontSizes(currentTheme);
 
   return (

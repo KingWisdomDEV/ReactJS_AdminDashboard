@@ -1,9 +1,10 @@
 import { createTheme } from '@mui/material';
 import { green } from '@mui/material/colors';
+import { THEMES } from '../constants';
 
 const lightTheme = createTheme({
-  mode: 'light',
   palette: {
+    mode: THEMES.LIGHT,
     primary: {
       main: green[500],
       light: '#ff8788',
