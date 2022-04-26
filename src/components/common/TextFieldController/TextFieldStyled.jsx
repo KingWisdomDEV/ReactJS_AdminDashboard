@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
 import {
   FormControl,
-  Typography,
-  TextField,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
   FormHelperText,
+  IconButton,
+  InputAdornment,
+  OutlinedInput,
+  TextField,
+  Typography,
 } from '@mui/material';
-import { VisibilityOutlined, VisibilityOffOutlined } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const useStyles = makeStyles(theme => ({
   field: {
@@ -21,21 +21,8 @@ const useStyles = makeStyles(theme => ({
 function TextFieldStyled(props) {
   const classes = useStyles();
 
-  const {
-    id,
-    name,
-    onChange,
-    value,
-    helperText,
-    label,
-    placeholder,
-    color,
-    required,
-    fullWidth,
-    type,
-    autoFocus,
-    variant,
-  } = props;
+  const { onChange, value, helperText, label, placeholder, color, required, fullWidth, type, autoFocus, variant } =
+    props;
   const [isShowPassword, setIsShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => {
@@ -49,8 +36,6 @@ function TextFieldStyled(props) {
       </Typography>
       {type !== 'password' ? (
         <TextField
-          id={id}
-          name={name}
           type={type}
           onChange={onChange}
           value={value}
@@ -58,22 +43,21 @@ function TextFieldStyled(props) {
           helperText={helperText}
           color={color}
           required={required}
-          inputProps={{ className: classes.field }}
           placeholder={placeholder}
+          inputProps={{ className: classes.field }}
           autoComplete={type === 'email' ? 'email' : 'off'}
           autoFocus={autoFocus}
         />
       ) : (
         <>
           <OutlinedInput
-            id={id}
-            name={name}
             type={isShowPassword ? 'text' : 'password'}
             onChange={onChange}
             value={value}
+            error={Boolean(helperText)}
             color={color}
             required={required}
-            error={Boolean(helperText)}
+            placeholder={placeholder}
             inputProps={{ className: classes.field }}
             endAdornment={
               <InputAdornment position="end">
@@ -91,8 +75,6 @@ function TextFieldStyled(props) {
 }
 
 TextFieldStyled.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
   helperText: PropTypes.string,
@@ -107,8 +89,6 @@ TextFieldStyled.propTypes = {
 };
 
 TextFieldStyled.defaultProps = {
-  id: null,
-  name: null,
   onChange: null,
   value: '',
   helperText: null,

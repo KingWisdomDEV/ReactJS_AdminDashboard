@@ -1,24 +1,15 @@
-import * as React from 'react';
+import { Checkbox, FormControl, FormControlLabel } from '@mui/material';
 import PropTypes from 'prop-types';
-
-import { FormControl, FormControlLabel, Checkbox } from '@mui/material';
+import * as React from 'react';
 
 function CheckboxStyled(props) {
-  const { id, size, color, name, onChange, value, label, defaultChecked, variant } = props;
+  const { size, color, onChange, value, label, defaultChecked, variant } = props;
 
   return (
     <FormControl>
       <FormControlLabel
         control={
-          <Checkbox
-            id={id}
-            size={size}
-            color={color}
-            name={name}
-            onChange={onChange}
-            value={value}
-            defaultChecked={defaultChecked}
-          />
+          <Checkbox size={size} color={color} onChange={onChange} value={value} defaultChecked={defaultChecked} />
         }
         label={label}
         componentsProps={{ typography: { variant } }}
@@ -28,10 +19,8 @@ function CheckboxStyled(props) {
 }
 
 CheckboxStyled.propTypes = {
-  id: PropTypes.string,
   size: PropTypes.string,
   color: PropTypes.string,
-  name: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.bool,
   label: PropTypes.string.isRequired,
@@ -40,10 +29,8 @@ CheckboxStyled.propTypes = {
 };
 
 CheckboxStyled.defaultProps = {
-  id: null,
   size: 'medium',
   color: 'primary',
-  name: null,
   onChange: null,
   value: false,
   defaultChecked: false,

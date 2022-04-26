@@ -3,11 +3,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import loginArt from '../../assets/login-vector-art.png';
-import { CheckboxStyled, TextFieldStyled } from '../../components';
+import { CheckboxController, TextFieldController } from '../../components/common';
 
 const schema = yup
   .object({
@@ -57,11 +57,8 @@ const useStyles = makeStyles(theme => ({
 
 function SignInScreen() {
   const classes = useStyles();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+
+  const form = useForm({
     defaultValues: {
       email: '',
       password: '',
@@ -71,6 +68,7 @@ function SignInScreen() {
   });
 
   const onSubmit = data => console.log(data);
+  const onError = error => console.log(error);
 
   return (
     <Container maxWidth="xl" className={classes.root}>
@@ -78,68 +76,37 @@ function SignInScreen() {
         <Box className={classes.img}>
           <img src={loginArt} alt="login-vector-art" />
         </Box>
-        <Container className={classes.form} component="form" onSubmit={handleSubmit(onSubmit)}>
-          <Box textAlign="center">
-            <Typography variant="h4" color="primary" gutterBottom fontWeight="bold">
-              LOGIN TO ACCOUNT
-            </Typography>
-            <Typography variant="body1">Please enter your email and password to continue</Typography>
-          </Box>
-          <Stack spacing={2} mt={3}>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextFieldStyled
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  label="Email"
-                  fullWidth
-                  helperText={errors.email?.message}
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextFieldStyled
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  label="Password"
-                  type="password"
-                  fullWidth
-                  helperText={errors.password?.message}
-                />
-              )}
-            />
-          </Stack>
-          <Stack direction="row" alignItems="center" justifyContent="space-between">
-            <Controller
-              name="isRememberPassword"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <CheckboxStyled onChange={onChange} onBlur={onBlur} value={value} label="Remember Password" />
-              )}
-            />
-            <Link to="create-account" className={classes.link}>
-              <Typography variant="subtitle2">Forgot Password?</Typography>
-            </Link>
-          </Stack>
-          <Stack spacing={2} alignItems="center" mt={3}>
-            <Button type="submit" variant="contained" sx={{ textTransform: 'capitalize', width: '80%' }}>
-              Sign in
-            </Button>
-            <Stack direction="row" spacing={1}>
-              <Typography variant="subtitle2">Don't have an account?</Typography>
-              <Typography variant="subtitle2" color="primary" sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
-                Create Account
+        <FormProvider {...form}>
+          <Container className={classes.form} component="form" onSubmit={form.handleSubmit(onSubmit, onError)}>
+            <Box textAlign="center">
+              <Typography variant="h4" color="primary" gutterBottom fontWeight="bold">
+                LOGIN TO ACCOUNT
               </Typography>
+              <Typography variant="body1">Please enter your email and password to continue</Typography>
+            </Box>
+            <Stack spacing={2} mt={3}>
+              <TextFieldController name="email" label="Email" placeholder="johndoe@gmail.com" fullWidth />
+              <TextFieldController name="password" type="password" label="Password" placeholder="******" fullWidth />
             </Stack>
-          </Stack>
-        </Container>
+            <Stack direction="row" alignItems="center" justifyContent="space-between">
+              <CheckboxController name="isRememberPassword" label="Remember Password" />
+              <Link to="create-account" className={classes.link}>
+                <Typography variant="subtitle2">Forgot Password?</Typography>
+              </Link>
+            </Stack>
+            <Stack spacing={2} alignItems="center" mt={3}>
+              <Button type="submit" variant="contained" sx={{ textTransform: 'capitalize', width: '80%' }}>
+                Sign in
+              </Button>
+              <Stack direction="row" spacing={1}>
+                <Typography variant="subtitle2">Don't have an account?</Typography>
+                <Typography variant="subtitle2" color="primary" sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
+                  Create Account
+                </Typography>
+              </Stack>
+            </Stack>
+          </Container>
+        </FormProvider>
       </Box>
     </Container>
   );
