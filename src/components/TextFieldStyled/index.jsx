@@ -53,7 +53,7 @@ function TextFieldStyled(props) {
           name={name}
           type={type}
           onChange={onChange}
-          //   value={value}
+          value={value}
           error={Boolean(helperText)}
           helperText={helperText}
           color={color}
@@ -70,7 +70,7 @@ function TextFieldStyled(props) {
             name={name}
             type={isShowPassword ? 'text' : 'password'}
             onChange={onChange}
-            // value={value}
+            value={value}
             color={color}
             required={required}
             error={Boolean(helperText)}
@@ -110,7 +110,7 @@ TextFieldStyled.defaultProps = {
   id: null,
   name: null,
   onChange: null,
-  value: null,
+  value: '',
   helperText: null,
   placeholder: null,
   color: 'primary',
