@@ -23,6 +23,7 @@
         "react/button-has-type": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-plusplus": [1, { "allowForLoopAfterthoughts": true }],
-        "react/jsx-props-no-spreading": 0
+        "react/jsx-props-no-spreading": 0,
+        "default-param-last": 0
     }
 }
