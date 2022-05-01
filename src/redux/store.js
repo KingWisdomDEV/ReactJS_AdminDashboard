@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-
+import authReducer from '../containers/Auth/authSlice';
 import counterReducer from '../containers/Counter/counterSlice';
+import rootSaga from './rootSaga';
 import userPreferenceReducer from './userPreferenceSlice';
-import mySaga from './sagas';
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -14,11 +14,15 @@ export default configureStore({
     // Each ReduxSlide wrap inside each container folder
     counter: counterReducer,
     userPreference: userPreferenceReducer,
+    auth: authReducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: true,
+    }).concat(sagaMiddleware),
 });
 
 // then run the saga
-sagaMiddleware.run(mySaga);
+sagaMiddleware.run(rootSaga);
 
 // render the application

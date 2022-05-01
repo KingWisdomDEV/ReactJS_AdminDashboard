@@ -2,12 +2,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { get } from 'lodash';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import loginArt from '../../assets/login-vector-art.png';
 import { CheckboxController, TextFieldController } from '../../components/common';
+import { authActions } from './authSlice';
 
 const schema = yup
   .object({
@@ -57,6 +60,12 @@ const useStyles = makeStyles(theme => ({
 
 function SignInScreen() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+
+  // Info of page they tried visit
+  const from = get(location, 'state.from', null);
 
   const form = useForm({
     defaultValues: {
@@ -67,7 +76,10 @@ function SignInScreen() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    dispatch(authActions.login({ ...data, from }));
+  };
+
   const onError = error => console.log(error);
 
   return (
