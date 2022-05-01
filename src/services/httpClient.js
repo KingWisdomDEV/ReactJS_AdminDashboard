@@ -1,5 +1,4 @@
 /* eslint-disable no-async-promise-executor */
-/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { get } from 'lodash';
 import ResponseStatusType from './ResponseStatus';
