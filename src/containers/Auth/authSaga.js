@@ -40,6 +40,7 @@ function* handleLogin(action) {
 
 function* handleLogout() {
   yield removeToken();
+  history.push('/login');
   // toast.success("Logout success!")
 }
 

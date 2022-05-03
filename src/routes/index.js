@@ -1,7 +1,8 @@
+import { Button } from '@mui/material';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
-import { selectCurrentUser } from '../containers/Auth/authSlice';
+import { authActions, selectCurrentUser } from '../containers/Auth/authSlice';
 import SignInScreen from '../containers/Auth/SignInScreen';
 import SignUpScreen from '../containers/Auth/SignUpScreen';
 import Counter from '../containers/Counter';
@@ -9,6 +10,7 @@ import TestMUI from '../TestMUI';
 
 function Dashboard() {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -22,6 +24,7 @@ function Dashboard() {
       <Link to="/login" state={{ from: location }}>
         Login
       </Link>
+      <Button onClick={() => dispatch(authActions.logout())}>Logout</Button>
       <Outlet />
     </div>
   );
@@ -35,11 +38,20 @@ function ForgotPassword() {
   return <div>ForgotPassword Page</div>;
 }
 
-function RequireAuth() {
-  const currentUser = useSelector(selectCurrentUser);
-  console.log('currentUser', currentUser);
-  const location = useLocation();
-  console.log('location', location);
+function UnRequireAuth(props) {
+  const { currentUser } = props;
+
+  // when user navigate to unRequireAuth page, then check currentUser exist or not
+  // If exist redirect user to /dashboard page
+  if (currentUser) {
+    return <Navigate to="/dashboard" />;
+  }
+
+  return <Outlet />;
+}
+
+function RequireAuth(props) {
+  const { currentUser, location } = props;
 
   if (!currentUser) {
     // Redirect them to the /login page, but save the current location they were
@@ -53,20 +65,26 @@ function RequireAuth() {
 }
 
 function AppRoutes() {
+  const currentUser = useSelector(selectCurrentUser);
+  const location = useLocation();
+
   return (
     <Routes>
-      <Route path="/">
-        <Route index element={<TestMUI />} />
-      </Route>
-      <Route path="/counter" element={<Counter />} />
-      <Route path="/login" element={<SignInScreen />} />
-      <Route path="/create-account" element={<SignUpScreen />} />
-      <Route path="/forgot" element={<ForgotPassword />} />
-      <Route element={<RequireAuth />}>
+      <Route element={<RequireAuth currentUser={currentUser} location={location} />}>
+        <Route path="/">
+          <Route index element={<Dashboard />} />
+        </Route>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard1" element={<Dashboard />} />
         <Route path="/dashboard2" element={<Dashboard />} />
       </Route>
+      <Route element={<UnRequireAuth currentUser={currentUser} />}>
+        <Route path="/login" element={<SignInScreen />} />
+        <Route path="/create-account" element={<SignUpScreen />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+      </Route>
+      <Route path="/test" element={<TestMUI />} />
+      <Route path="/counter" element={<Counter />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
