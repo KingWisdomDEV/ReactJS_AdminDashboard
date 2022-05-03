@@ -3,6 +3,8 @@ import { responsiveFontSizes, StyledEngineProvider, ThemeProvider } from '@mui/m
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import { THEMES } from './constants';
 import history from './history';
@@ -30,6 +32,18 @@ function App() {
           </I18nProvider>
         </HistoryRouter>
       </ThemeProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </StyledEngineProvider>
   );
 }

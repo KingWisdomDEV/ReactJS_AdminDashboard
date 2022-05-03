@@ -1,5 +1,5 @@
-// import { toast } from 'react-toastify';
 import { get } from 'lodash';
+import { toast } from 'react-toastify';
 import { all, put, takeEvery, takeLeading } from 'redux-saga/effects';
 import history from '../../history';
 import { login } from '../../services/authService';
@@ -14,7 +14,6 @@ function* handleLogin(action) {
     if (isRemember) {
       // TODO: handle data when user click remember me
     }
-    console.log('payload', action.payload);
     const authResponse = yield axiosHandler(() => login(email, password));
     // login success
     if ((authResponse.status === ResponseStatusType.OK || authResponse.status === '') && authResponse.data.length > 0) {
@@ -24,39 +23,24 @@ function* handleLogin(action) {
 
       // Send them back to the page they tried to visit when they were redirected to the login page.
       history.push(get(from, 'pathname', '/dashboard'));
-      // toast.success("Login success!")
+      toast.success(`Hi ${email}, nice to meet you!`);
     } else {
-      console.log('loi');
-
       // distpatch action
       yield put(authActions.loginFailure());
-      // toast.error("Login failed")
+      toast.error('Email or password incorrect');
     }
   } catch (error) {
-    console.log('Error: ', error);
+    // console.log('Error: ', error);
     yield put(authActions.loginFailure());
+    toast.error('An error has occurred. Please retry later.');
   }
 }
 
 function* handleLogout() {
   yield removeToken();
   history.push('/login');
-  // toast.success("Logout success!")
+  toast.success('Logout success!');
 }
-
-// function* watchLoginFlow() {
-//     while (true) {
-//         const isLoggedIn = Boolean(getToken());
-
-//         if (!isLoggedIn) {
-//             const action = yield take(authActions.login.type);
-//             yield fork(handleLogin, action);
-//         }
-
-//         yield take(authActions.logout.type);
-//         yield call(handleLogout);
-//     }
-// }
 
 function* watchLogin() {
   const isLoggedIn = Boolean(getToken());
