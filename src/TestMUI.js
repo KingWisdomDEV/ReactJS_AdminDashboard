@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOCALES, THEMES } from './constants';
 import { selectThemeMode, userPreferenceActions } from './redux/userPreferenceSlice';
-import { changeLocale } from './i18next';
+import i18n from './i18next';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,6 +52,12 @@ function TestMUI() {
   const currentThemeMode = useSelector(selectThemeMode);
   const dispatch = useDispatch();
 
+  const changeLocale = locale => {
+    i18n.changeLanguage(locale);
+
+    // Update Redux store
+    dispatch(userPreferenceActions.changeLocale(locale));
+  };
   return (
     <Paper className={classes.root}>
       <Typography variant="h1" className={clsx(classes.bgPrimary, classes.txtWhite)}>

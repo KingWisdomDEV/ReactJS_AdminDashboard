@@ -6,8 +6,6 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import { LOCALES } from '../constants';
-import store from '../redux/store';
-import { userPreferenceActions } from '../redux/userPreferenceSlice';
 import en from './resources/en/translation.json';
 import vi from './resources/vi/translation.json';
 
@@ -46,10 +44,3 @@ i18n
 export default i18n;
 
 export const translate = (key, values) => i18n.t(key, values);
-
-export const changeLocale = locale => {
-  i18n.changeLanguage(locale);
-
-  // Update Redux store
-  store.dispatch(userPreferenceActions.changeLocale(locale));
-};

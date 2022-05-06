@@ -1,9 +1,8 @@
-// /* eslint-disable import/no-cycle */
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
 import { all, put, takeEvery, takeLeading } from 'redux-saga/effects';
 import history from '../../history';
-// import { translate } from '../../i18next/translate';
+import { translate } from '../../i18next';
 import { login } from '../../services/authService';
 import { axiosHandler } from '../../services/httpClient';
 import ResponseStatusType from '../../services/ResponseStatus';
@@ -25,18 +24,18 @@ function* handleLogin(action) {
 
       // Send them back to the page they tried to visit when they were redirected to the login page.
       history.push(get(from, 'pathname', '/dashboard'));
-      // toast.success(translate('messages.success.login', { email }));
+      toast.success(translate('messages.success.login', { email }));
       // toast.success(`Hi ${email}, nice to meet you!`);
     } else {
       // distpatch action
       yield put(authActions.loginFailure());
-      // toast.error(translate('messages.error.login'));
+      toast.error(translate('messages.error.login'));
       // toast.error('Email or password incorrect');
     }
   } catch (error) {
     // console.log('Error: ', error);
     yield put(authActions.loginFailure());
-    // toast.error(translate('messages.error.service'));
+    toast.error(translate('messages.error.service'));
   }
 }
 
