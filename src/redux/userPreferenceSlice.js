@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { LOCALES, THEMES } from '../constants';
+import { THEMES } from '../constants';
 
 const InitState = {
   currentThemeMode: THEMES.LIGHT,
-  currentLocale: LOCALES.VIETNAM,
+  currentLocale: null, // it detected when init i18next lib
 };
 
 const userPreferenceSlice = createSlice({

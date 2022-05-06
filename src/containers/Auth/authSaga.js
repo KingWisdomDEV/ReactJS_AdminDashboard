@@ -42,7 +42,7 @@ function* handleLogin(action) {
 function* handleLogout() {
   yield removeToken();
   history.push('/login');
-  // toast.success(translate('messages.success.logout'));
+  toast.success(translate('messages.success.logout'));
 }
 
 function* watchLogin() {

@@ -15,7 +15,6 @@ i18n
   // want your translations to be loaded from a professional CDN? => https://github.com/locize/react-tutorial#step-2---use-the-locize-cdn
   // .use(Backend)
   // detect user language
-  // learn more: https://github.com/i18next/i18next-browser-languageDetector
   .use(LanguageDetector)
   // pass the i18n instance to react-i18next.
   .use(initReactI18next)
@@ -33,8 +32,7 @@ i18n
         translation: vi,
       },
     },
-    lng: 'en', // if you're using a language detector, do not define the lng option
-    fallbackLng: 'en',
+    fallbackLng: LOCALES.ENGLISH,
 
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
