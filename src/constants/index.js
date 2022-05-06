@@ -1,8 +1,8 @@
 const LOCALES = {
-  VIETNAM: 'vi-VN',
-  ENGLISH: 'en-us',
-  GERMAN: 'de-de',
-  FRENCH: 'fr-ca',
+  VIETNAM: 'vi',
+  ENGLISH: 'en',
+  GERMAN: 'de',
+  FRENCH: 'fr',
 };
 
 const THEMES = {

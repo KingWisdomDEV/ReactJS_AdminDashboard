@@ -6,10 +6,11 @@ import { Button, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { makeStyles, styled } from '@mui/styles';
 import clsx from 'clsx';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOCALES, THEMES } from './constants';
-import translate from './i18n/translate';
 import { selectThemeMode, userPreferenceActions } from './redux/userPreferenceSlice';
+import { changeLocale } from './i18next/translate';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,6 +48,7 @@ const MyButton = styled(Button)({
 
 function TestMUI() {
   const classes = useStyles();
+  const { t, i18n } = useTranslation();
   const currentThemeMode = useSelector(selectThemeMode);
   const dispatch = useDispatch();
 
@@ -83,10 +85,16 @@ function TestMUI() {
         {currentThemeMode === THEMES.LIGHT ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
       <hr />
-      <h1>{translate('hello')}</h1>
-      <h1>{translate('hello-name', { name: 'King Wisdom' })}</h1>
-      <button onClick={() => dispatch(userPreferenceActions.changeLocale(LOCALES.VIETNAM))}>Vietnam</button>
-      <button onClick={() => dispatch(userPreferenceActions.changeLocale(LOCALES.ENGLISH))}>English</button>
+      <h1>{t('hello')}</h1>
+      <h1>{t('hello-name', { name: 'King Wisdom' })}</h1>
+      {/* <Trans>hello</Trans> */}
+      <Trans values={{ name: 'King' }}>hello-name</Trans>
+      <button onClick={() => changeLocale(LOCALES.VIETNAM)}>Vietnam</button>
+      <button onClick={() => changeLocale(LOCALES.ENGLISH)}>English</button>
+      {/* <button onClick={() => i18n.changeLanguage(LOCALES.VIETNAM)}>Vietnam</button>
+      <button onClick={() => i18n.changeLanguage(LOCALES.ENGLISH)}>English</button> */}
+      {/* <button onClick={() => dispatch(userPreferenceActions.changeLocale(LOCALES.VIETNAM))}>Vietnam</button>
+      <button onClick={() => dispatch(userPreferenceActions.changeLocale(LOCALES.ENGLISH))}>English</button> */}
     </Paper>
   );
 }
