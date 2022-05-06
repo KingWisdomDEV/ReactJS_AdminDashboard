@@ -1,17 +1,21 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-
-import Backend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
+// import Backend from 'i18next-http-backend';
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
+import { LOCALES } from '../constants';
+import store from '../redux/store';
+import { userPreferenceActions } from '../redux/userPreferenceSlice';
+import en from './resources/en/translation.json';
+import vi from './resources/vi/translation.json';
 
 i18n
   // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
   // learn more: https://github.com/i18next/i18next-http-backend
   // want your translations to be loaded from a professional CDN? => https://github.com/locize/react-tutorial#step-2---use-the-locize-cdn
-  .use(Backend)
+  // .use(Backend)
   // detect user language
   // learn more: https://github.com/i18next/i18next-browser-languageDetector
   .use(LanguageDetector)
@@ -23,18 +27,14 @@ i18n
     // the translations
     // (tip move them in a JSON file and import them,
     // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
-    // resources: {
-    //     en: {
-    //         translation: {
-    //             welcome: "Welcome to React and react-i18next",
-    //         },
-    //     },
-    //     fr: {
-    //         translation: {
-    //             welcome: "Bienvenue à React et react-i18next",
-    //         },
-    //     },
-    // },
+    resources: {
+      [LOCALES.ENGLISH]: {
+        translation: en,
+      },
+      [LOCALES.VIETNAM]: {
+        translation: vi,
+      },
+    },
     lng: 'en', // if you're using a language detector, do not define the lng option
     fallbackLng: 'en',
 
@@ -44,3 +44,12 @@ i18n
   });
 
 export default i18n;
+
+export const translate = (key, values) => i18n.t(key, values);
+
+export const changeLocale = locale => {
+  i18n.changeLanguage(locale);
+
+  // Update Redux store
+  store.dispatch(userPreferenceActions.changeLocale(locale));
+};

@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOCALES, THEMES } from './constants';
 import { selectThemeMode, userPreferenceActions } from './redux/userPreferenceSlice';
-import { changeLocale } from './i18next/translate';
+import { changeLocale } from './i18next';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,7 +48,7 @@ const MyButton = styled(Button)({
 
 function TestMUI() {
   const classes = useStyles();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const currentThemeMode = useSelector(selectThemeMode);
   const dispatch = useDispatch();
 

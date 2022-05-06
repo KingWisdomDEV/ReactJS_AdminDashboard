@@ -1,0 +1,14 @@
+{
+  "hello": "Xin chào",
+  "hello-name": "Xin chào {{name}}",
+  "messages": {
+    "success": {
+      "login": "Xin chào {{email}}, chúc bạn ngày mới tốt lành!",
+      "logout": "Đăng xuất thành công!"
+    },
+    "error": {
+      "login": "Tài khoản hoặc mật khẩu không chính xác",
+      "service": "Có lỗi xảy ra. Vui lòng thử lại sau."
+    }
+  }
+}

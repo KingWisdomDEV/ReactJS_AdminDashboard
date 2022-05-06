@@ -12,7 +12,7 @@ const rootElement = document.getElementById('root');
 createRoot(rootElement).render(
   <React.StrictMode>
     <ReduxProvider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<div>loading...</div>} persistor={persistor}>
         <App />
       </PersistGate>
     </ReduxProvider>

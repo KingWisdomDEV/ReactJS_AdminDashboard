@@ -1,0 +1,14 @@
+{
+  "hello": "Hello",
+  "hello-name": "Hello {{name}}",
+  "messages": {
+    "success": {
+      "login": "Hi {{email}}, have a nice day!",
+      "logout": "Logout success!"
+    },
+    "error": {
+      "login": "Email or password incorrect",
+      "service": "An error has occurred. Please retry later."
+    }
+  }
+}
