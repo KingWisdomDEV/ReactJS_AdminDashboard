@@ -8,34 +8,35 @@ const leftNavigationWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   header: {
-    background: theme.palette.primary.main,
+    // background: theme.palette.primary.main,
   },
   leftNavigation: {
     width: leftNavigationWidth,
     background: theme.palette.secondary.main,
     height: '100vh',
   },
-  mainContent: {
+  content: {
     width: `calc(100% - ${leftNavigationWidth}px)`,
+  },
+  mainContent: {
     background: theme.palette.success.main,
-    height: '100vh',
   },
 }));
 function HomeLayout({ children }) {
   const classes = useStyles();
 
   return (
-    <>
-      <Box className={classes.header}>
-        <Header />
+    <Stack direction="row">
+      <Box className={classes.leftNavigation}>
+        <LeftNavigation />
       </Box>
-      <Stack direction="row">
-        <Box className={classes.leftNavigation}>
-          <LeftNavigation />
+      <Box className={classes.content}>
+        <Box className={classes.header}>
+          <Header />
         </Box>
         <Box className={classes.mainContent}>{children}</Box>
-      </Stack>
-    </>
+      </Box>
+    </Stack>
   );
 }
 
