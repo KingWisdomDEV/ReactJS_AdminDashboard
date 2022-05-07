@@ -1,34 +1,12 @@
-import { Button } from '@mui/material';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
-import { authActions, selectCurrentUser } from '../containers/Auth/authSlice';
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { selectCurrentUser } from '../containers/Auth/authSlice';
 import SignInScreen from '../containers/Auth/SignInScreen';
 import SignUpScreen from '../containers/Auth/SignUpScreen';
 import Counter from '../containers/Counter';
+import Dashboard from '../containers/Dashboard';
 import TestMUI from '../TestMUI';
-
-function Dashboard() {
-  const location = useLocation();
-  const dispatch = useDispatch();
-
-  return (
-    <div>
-      Dashboard Page
-      <Link to="/dashboard">Dashboard</Link>
-      <hr />
-      <Link to="/dashboard1">Dashboard1</Link>
-      <hr />
-      <Link to="/dashboard2">Dashboard2</Link>
-      <hr />
-      <Link to="/login" state={{ from: location }}>
-        Login
-      </Link>
-      <Button onClick={() => dispatch(authActions.logout())}>Logout</Button>
-      <Outlet />
-    </div>
-  );
-}
 
 function NotFound() {
   return <div>NotFound Page</div>;
