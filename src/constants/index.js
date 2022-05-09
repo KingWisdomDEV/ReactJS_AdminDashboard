@@ -8,4 +8,8 @@ const THEMES = {
   DARK: 'dark',
 };
 
-export { LOCALES, THEMES };
+const STYLES = {
+  leftNavigationWidth: 240,
+};
+
+export { LOCALES, THEMES, STYLES };
